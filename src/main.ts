@@ -1,5 +1,5 @@
 import "./style.css";
-import { nativeInvoke } from "./native";
+import { isTauriRuntime, nativeInvoke } from "./native";
 import {
   ATLAS_HEIGHT,
   ATLAS_WIDTH,
@@ -30,6 +30,11 @@ const sprite = document.querySelector<HTMLDivElement>("#pet-sprite");
 const menu = document.querySelector<HTMLElement>("#pet-menu");
 const stage = document.querySelector<HTMLDivElement>("#pet-stage");
 const bubble = document.querySelector<HTMLDivElement>("#status-bubble");
+
+const isMobileWeb =
+  !isTauriRuntime && window.matchMedia("(max-width: 700px), (pointer: coarse)").matches;
+
+if (isMobileWeb) document.body.classList.add("mobile-web");
 
 if (!sprite || !menu || !stage || !bubble) {
   throw new Error("Timi UI did not initialize");
@@ -91,12 +96,18 @@ const updateMenuLabels = (): void => {
 };
 
 const closeMenu = (): void => {
+  if (isMobileWeb) return;
   menu.classList.add("hidden");
   menuOpen = false;
 };
 
 const openMenu = (x: number, y: number): void => {
   updateMenuLabels();
+  if (isMobileWeb) {
+    menu.classList.remove("hidden");
+    menuOpen = true;
+    return;
+  }
   menu.style.left = `${Math.min(x, window.innerWidth - 190)}px`;
   menu.style.top = `${Math.min(y, window.innerHeight - 250)}px`;
   menu.classList.remove("hidden");
@@ -131,6 +142,7 @@ sprite.addEventListener("dblclick", (event) => {
 sprite.addEventListener("pointerdown", (event) => {
   if (event.button !== 0) return;
   dragging = false;
+  if (isMobileWeb) return;
   holdTimer = window.setTimeout(async () => {
     dragging = true;
     animator.play("working");
@@ -160,7 +172,7 @@ sprite.addEventListener("contextmenu", (event) => {
 });
 
 document.addEventListener("pointerdown", (event) => {
-  if (menuOpen && !menu.contains(event.target as Node)) closeMenu();
+  if (!isMobileWeb && menuOpen && !menu.contains(event.target as Node)) closeMenu();
 });
 
 menu.addEventListener("click", async (event) => {
@@ -211,7 +223,7 @@ sprite.addEventListener("keydown", (event) => {
 });
 
 const wanderTick = async (): Promise<void> => {
-  if (!preferences.wander || dragging || menuOpen) return;
+  if (!preferences.wander || dragging || (!isMobileWeb && menuOpen)) return;
   const animation = wanderDirection === 1 ? "walkRight" : "walkLeft";
   if (animator.current !== animation) animator.play(animation);
 
@@ -223,6 +235,7 @@ const wanderTick = async (): Promise<void> => {
     if (result.hitRight) wanderDirection = -1;
     if (result.hitLeft) wanderDirection = 1;
     preferences.position = { x: result.x, y: result.y };
+    if (isMobileWeb) stage.style.setProperty("--pet-x", `${result.x}px`);
   } catch (error) {
     console.warn("Timi could not wander", error);
     preferences.wander = false;
@@ -248,17 +261,32 @@ const initialize = async (): Promise<void> => {
   setScale(preferences.scale);
   updateMenuLabels();
 
+  if (isMobileWeb) {
+    menu.classList.remove("hidden");
+    menuOpen = true;
+  }
+
   await nativeInvoke("set_always_on_top", { enabled: preferences.alwaysOnTop });
   if (preferences.position) {
     await nativeInvoke("restore_position", {
       x: preferences.position.x,
       y: preferences.position.y
     });
+    if (isMobileWeb) {
+      preferences.position = await nativeInvoke<WindowPosition>("window_position");
+      stage.style.setProperty("--pet-x", `${preferences.position.x}px`);
+    }
   }
   await nativeInvoke("show_window");
 
   window.setInterval(() => void wanderTick(), 115);
   requestAnimationFrame(animate);
+
+  if (!isTauriRuntime && import.meta.env.PROD && "serviceWorker" in navigator) {
+    void navigator.serviceWorker.register("/sw.js").catch((error) => {
+      console.info("Offline mode is unavailable", error);
+    });
+  }
 };
 
 void initialize().catch((error) => {

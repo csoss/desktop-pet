@@ -45,6 +45,16 @@ Frontend-only preview:
 npm run dev
 ```
 
+iPhone preview on the same Wi-Fi network:
+
+```bash
+npm run dev:phone
+```
+
+Open the printed network URL in iPhone Safari. The responsive web mode reuses the
+same pet animation without changing the macOS or Windows Tauri application. When
+served over HTTPS, it can also be added to the Home Screen as a lightweight PWA.
+
 Production build:
 
 ```bash
@@ -102,6 +112,16 @@ Timi 是一个不依赖 Codex 的独立桌面宠物，支持 macOS 和 Windows�
 npm install
 npm run tauri dev
 ```
+
+iPhone 快速预览（Mac 与 iPhone 连接同一个 Wi-Fi）：
+
+```bash
+npm run dev:phone
+```
+
+然后用 iPhone Safari 打开终端显示的 Network 地址。移动网页模式与 macOS、
+Windows 桌面应用共用动画资源，不会改变桌面端行为；通过 HTTPS 部署后还可
+“添加到主屏幕”。
 
 构建安装包：
 

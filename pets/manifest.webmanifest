@@ -1,0 +1,17 @@
+{
+  "name": "Timi Pocket Pet",
+  "short_name": "Timi",
+  "description": "A tiny animated pocket companion.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#91d8f0",
+  "theme_color": "#f4c97d",
+  "icons": [
+    {
+      "src": "/timi-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
