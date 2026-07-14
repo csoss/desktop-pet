@@ -55,6 +55,9 @@ Open the printed network URL in iPhone Safari. The responsive web mode reuses th
 same pet animation without changing the macOS or Windows Tauri application. When
 served over HTTPS, it can also be added to the Home Screen as a lightweight PWA.
 
+The `Deploy iPhone preview` workflow publishes the PWA to GitHub Pages at
+`https://csoss.github.io/desktop-pet/` whenever `main` is updated.
+
 Production build:
 
 ```bash
@@ -122,6 +125,9 @@ npm run dev:phone
 然后用 iPhone Safari 打开终端显示的 Network 地址。移动网页模式与 macOS、
 Windows 桌面应用共用动画资源，不会改变桌面端行为；通过 HTTPS 部署后还可
 “添加到主屏幕”。
+
+推送到 `main` 后，`Deploy iPhone preview` 工作流会自动发布到：
+`https://csoss.github.io/desktop-pet/`，此方式不要求 iPhone 与 Mac 在同一网络。
 
 构建安装包：
 

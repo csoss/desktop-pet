@@ -256,7 +256,7 @@ const animate = (now: number): void => {
 };
 
 const initialize = async (): Promise<void> => {
-  sprite.style.backgroundImage = "url('/timi/spritesheet.webp')";
+  sprite.style.backgroundImage = `url('${import.meta.env.BASE_URL}timi/spritesheet.webp')`;
   sprite.style.backgroundSize = `${ATLAS_WIDTH}px ${ATLAS_HEIGHT}px`;
   setScale(preferences.scale);
   updateMenuLabels();
@@ -283,7 +283,7 @@ const initialize = async (): Promise<void> => {
   requestAnimationFrame(animate);
 
   if (!isTauriRuntime && import.meta.env.PROD && "serviceWorker" in navigator) {
-    void navigator.serviceWorker.register("/sw.js").catch((error) => {
+    void navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch((error) => {
       console.info("Offline mode is unavailable", error);
     });
   }

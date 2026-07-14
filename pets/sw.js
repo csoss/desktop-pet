@@ -1,5 +1,6 @@
 const CACHE_NAME = "timi-pocket-v1";
-const APP_SHELL = ["/", "/manifest.webmanifest", "/timi-icon.svg", "/timi/pet.json", "/timi/spritesheet.webp"];
+const appUrl = (path) => new URL(path, self.location.href).href;
+const APP_SHELL = ["./", "./manifest.webmanifest", "./timi-icon.svg", "./timi/pet.json", "./timi/spritesheet.webp"].map(appUrl);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
@@ -24,6 +25,6 @@ self.addEventListener("fetch", (event) => {
         void caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return response;
       })
-      .catch(() => caches.match(event.request).then((response) => response ?? caches.match("/")))
+      .catch(() => caches.match(event.request).then((response) => response ?? caches.match(appUrl("./"))))
   );
 });
