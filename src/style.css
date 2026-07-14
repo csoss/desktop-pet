@@ -1,0 +1,138 @@
+:root {
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: transparent;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  cursor: default;
+}
+
+#app {
+  position: relative;
+  display: grid;
+  place-items: end center;
+}
+
+#pet-stage {
+  --pet-scale: 1;
+  position: relative;
+  width: 192px;
+  height: 208px;
+  margin-bottom: 18px;
+  transform: scale(var(--pet-scale));
+  transform-origin: center bottom;
+  filter: drop-shadow(0 5px 3px rgb(0 0 0 / 16%));
+}
+
+#pet-sprite {
+  width: 192px;
+  height: 208px;
+  outline: none;
+  cursor: grab;
+  image-rendering: auto;
+  touch-action: none;
+}
+
+#pet-sprite:active {
+  cursor: grabbing;
+}
+
+#pet-sprite:focus-visible {
+  filter: drop-shadow(0 0 5px rgb(255 180 63 / 80%));
+}
+
+#status-bubble {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  min-width: 52px;
+  padding: 5px 9px;
+  border: 1px solid rgb(255 255 255 / 72%);
+  border-radius: 999px;
+  color: #573621;
+  background: rgb(255 250 238 / 92%);
+  box-shadow: 0 3px 12px rgb(47 29 18 / 18%);
+  font-size: 11px;
+  font-weight: 650;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 5px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  pointer-events: none;
+}
+
+#status-bubble.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+#pet-menu {
+  position: absolute;
+  z-index: 20;
+  display: grid;
+  width: 184px;
+  gap: 4px;
+  margin: 0;
+  padding: 7px;
+  border: 1px solid rgb(255 255 255 / 66%);
+  border-radius: 13px;
+  background: rgb(35 29 25 / 92%);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 30%);
+  backdrop-filter: blur(18px);
+}
+
+#pet-menu.hidden {
+  display: none;
+}
+
+#pet-menu button {
+  min-height: 30px;
+  padding: 6px 9px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff9ef;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+#pet-menu button:hover,
+#pet-menu button:focus-visible {
+  outline: none;
+  background: rgb(255 255 255 / 12%);
+}
+
+#pet-menu .danger {
+  color: #ffaea6;
+}
+
+.menu-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.menu-row button {
+  text-align: center !important;
+}

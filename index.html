@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#00000000" />
+    <title>Timi</title>
+  </head>
+  <body>
+    <main id="app" aria-label="Timi desktop pet">
+      <div id="pet-stage">
+        <div id="pet-sprite" role="button" tabindex="0" aria-label="Timi"></div>
+        <div id="status-bubble" role="status" aria-live="polite"></div>
+      </div>
+
+      <menu id="pet-menu" class="hidden" aria-label="Timi controls">
+        <button type="button" data-action="wave">Wave</button>
+        <button type="button" data-action="jump">Jump</button>
+        <button type="button" data-action="wander">Wander: Off</button>
+        <button type="button" data-action="always-on-top">Always on top: On</button>
+        <div class="menu-row" aria-label="Pet scale">
+          <button type="button" data-scale="0.8">80%</button>
+          <button type="button" data-scale="1">100%</button>
+          <button type="button" data-scale="1.2">120%</button>
+        </div>
+        <button type="button" data-action="click-through">Click through</button>
+        <button type="button" data-action="quit" class="danger">Quit Timi</button>
+      </menu>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

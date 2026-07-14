@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Timi Desktop Pet",
+  "version": "0.1.0",
+  "identifier": "com.csoss.timi-desktop-pet",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: http://asset.localhost; style-src 'self'; script-src 'self'"
+    },
+    "windows": [
+      {
+        "label": "main",
+        "title": "Timi",
+        "width": 320,
+        "height": 340,
+        "minWidth": 320,
+        "minHeight": 340,
+        "maxWidth": 320,
+        "maxHeight": 340,
+        "resizable": false,
+        "fullscreen": false,
+        "focus": false,
+        "acceptFirstMouse": true,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "shadow": false,
+        "visible": false
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Entertainment",
+    "shortDescription": "Timi, a tiny animated desktop cat",
+    "longDescription": "A lightweight cross-platform desktop pet based on Timi the cream-and-silver tabby cat.",
+    "macOS": {
+      "minimumSystemVersion": "10.15",
+      "signingIdentity": "-"
+    },
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper"
+      },
+      "nsis": {
+        "installMode": "currentUser"
+      }
+    }
+  }
+}
