@@ -48,6 +48,7 @@ jobs:
           tagName: app-v__VERSION__
           releaseName: Timi Desktop Pet v__VERSION__
           releaseBody: Download the macOS DMG or Windows installer from the assets below.
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
+          uploadWorkflowArtifacts: true
           args: ${{ matrix.args }}
